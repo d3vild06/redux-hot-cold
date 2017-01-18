@@ -1,38 +1,45 @@
 import * as actions from '../actions/index';
 import update from 'immutability-helper';
+import store from '../store';
 
 const initialState = {
-  guessNumber: '',
+  correctNumber: actions.generateRandNum().guessNumber,
   userGuess: [],
-  guessCount: 0,
   newGame: false,
-  message: ''
-}
+  message: 'Make Your Guess!'
+};
 
 export const GuessNumberReducer = (state=initialState, action) => {
   switch (action.type) {
     case 'NEW_GAME':
-      return [...state, {
-        guessNumber: actions.generateRandNum().guessNumber,
-        newGame: true
-      }]
+    console.log('new game action requested');
+      return update(initialState, {
+        newGame: {$set: true}
+      });
       break;
     case 'GUESS_NUMBER':
-      update(state, {guessCount: {$set: state.guessCount++}});
-      if (action.userGuess === state.guessNumber) {
-        udpate(state, {
-          message: {$set: 'You guessed right!'},
-          userGuess: {$push: [action.userGuess]}
+      let userGuess = parseInt(action.userGuess, 10);
+      // check for non integers submitted
+      if (isNaN(userGuess)) {
+        return update(state, {
+          message: {$set: 'You must enter a valid number'}
         });
       }
-      update(state, {
-        message: {$set: 'You guessed wrong!'},
+      if (userGuess != state.correctNumber) {
+        return update(state, {
+          message: {$set: 'You guessed wrong!'},
+          userGuess: {$push: [userGuess]}
+        });
+      }
+
+      return update(state, {
+        message: {$set: 'You guessed right!'},
         userGuess: {$push: [action.userGuess]}
       });
       break;
     default:
       console.log('Invalid Action');
-      return 'Invalid action';
+      return state;
+      break;
   }
-  return state;
-}
+};

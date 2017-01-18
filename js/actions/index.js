@@ -10,8 +10,8 @@ export const createNewGame = () => ({
 
 export const GENERATE_RANDOM_NUMBER = 'GENERATE_RANDOM_NUMBER';
 export const generateRandNum = () => {
-  min = Math.ceil(1);
-  max = Math.floor(10);
+  let min = Math.ceil(1);
+  let max = Math.floor(10);
   let guessNumber = Math.floor(Math.random() * (max - min + 1)) + min;
   return  {
     type: GENERATE_RANDOM_NUMBER,
