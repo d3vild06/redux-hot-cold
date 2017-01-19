@@ -38,6 +38,14 @@ export const GuessNumberReducer = (state=initialState, action) => {
         userGuess: {$push: [action.userGuess]}
       });
       break;
+    case 'FETCH_FEWESTGUESSES_SUCCESS':
+      console.log('fewest guesses');
+      console.log(action.fewestGuesses);
+      return update(state, {
+        fewestGuesses: {$set: action.fewestGuesses}
+      });
+      break;
+
     default:
       console.log('Invalid Action');
       return state;

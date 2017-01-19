@@ -23,7 +23,7 @@ app.post('/fewest-guesses', (req, res) => {
   let count = req.body.count;
   if (count < fewestGuessCount.count) {
     fewestGuessCount.count = count;
-    res.status(201).end();
+    res.status(201).json(fewestGuessCount.count);
   }
 })
 

@@ -13,6 +13,11 @@ export class GameForm extends Component {
     super(props);
     this.submitGuess = this.submitGuess.bind(this);
   }
+  
+  componentDidMount() {
+    this.props.dispatch(actions.fetchFewestGuesses());
+  }
+
 
   submitGuess(e) {
     e.preventDefault();

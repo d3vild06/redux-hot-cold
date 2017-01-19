@@ -27,6 +27,7 @@ const mapStateToProps = (state, props) => ({
   userGuess: state.userGuess,
   correctNumber: state.correctNumber,
   fewestGuesses: state.fewestGuesses
+  
 });
 
 export default connect(mapStateToProps)(Game);

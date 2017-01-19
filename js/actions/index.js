@@ -27,5 +27,70 @@ export const guessNumber = (userGuess) => ({
   userGuess
 });
 
-// export const FETCH_FEWESTGUESSES_SUCCESS = 'FETCH_FEWESTGUESSES_SUCCESS';
-// export const fetchFewestGuesses = (count)
+
+export const FETCH_FEWESTGUESSES_SUCCESS = 'FETCH_FEWESTGUESSES_SUCCESS';
+export const fetchFewestGuessesSuccess = (count) => ({
+  type: FETCH_FEWESTGUESSES_SUCCESS,
+  fewestGuesses: count
+});
+
+
+export const FETCH_FEWESTGUESSES_ERROR = 'FETCH_FEWESTGUESSES_ERROR';
+export const fetchFewestGuessesError = (error) => ({
+  type: FETCH_FEWESTGUESSES_ERROR,
+  errorMessage: error
+});
+
+export const fetchFewestGuesses = () => dispatch => {
+  const url = 'http://localhost:8081/fewest-guesses';
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      let error = new Error(response.statusText);
+      error.response = response;
+      throw error;
+    }
+    return response;
+  })
+  .then(response => response.json())
+  .then(count =>
+      //console.log(data) 
+      dispatch(fetchFewestGuessesSuccess(count))
+    )
+    .catch(error =>
+    dispatch(fetchFewestGuessesError(error))
+    );
+};
+
+
+export const SAVE_FEWESTGUESSES_SUCCESS = 'SAVE_FEWESTGUESSES_SUCCESS';
+export const saveFewestGuessesSuccess = count => ({
+  type: SAVE_FEWESTGUESSES_SUCCESS,
+  fewestGuesses: count
+})    
+
+export const SAVE_FEWESTGUESSES_ERROR = 'SAVE_FEWESTGUESSES_ERROR';
+export const saveFewestGuessesError = error => ({
+  type: SAVE_FEWESTGUESSES_ERROR,
+  errorMessage: error
+})   
+
+export const saveFewestGuesses = count => dispatch => {
+  const url = 'http://localhost:8081/fewest-guesses';
+  return fetch(url, {
+    method: 'post',
+    body: JSON.stringify({count})
+  })
+  .then(response => {
+    if (!response.ok) {
+      let error = new Error(response.statusText);
+      error.response = response;
+      throw error;
+    }
+    return response;
+  })
+  .then(response => response.json())
+  .then(count => 
+      dispatch(saveFewestGuessesSuccess(count)))
+  .catch(error => 
+      dispatch(saveFewestGuessesError(error)))   
+  };
