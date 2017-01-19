@@ -5,7 +5,7 @@ import React, {
 
 import { connect } from 'react-redux';
 import * as actions from '../actions/index';
-import GuessList from './GuessList';
+// import GuessList from './GuessList';
 
 export class GameForm extends Component {
 
@@ -30,7 +30,6 @@ export class GameForm extends Component {
           <button>Guess</button>
         </form>
         <p id="guess-count">Guess Count: {this.props.userGuess.length} </p>
-        <GuessList />
       </div>
     );
   }
