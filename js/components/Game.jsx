@@ -15,7 +15,7 @@ export class Game extends React.Component {
     return (
       <div>
         <Header />
-        <GameForm message={this.props.message} guessCount={this.props.guessCount} userGuess={this.props.userGuess}/>
+        <GameForm message={this.props.message} guessCount={this.props.guessCount} userGuess={this.props.userGuess} fewestGuesses={this.props.fewestGuesses}/>
         <GuessList />
       </div>
     );
@@ -25,7 +25,8 @@ export class Game extends React.Component {
 const mapStateToProps = (state, props) => ({
   message: state.message,
   userGuess: state.userGuess,
-  correctNumber: state.correctNumber
+  correctNumber: state.correctNumber,
+  fewestGuesses: state.fewestGuesses
 });
 
 export default connect(mapStateToProps)(Game);

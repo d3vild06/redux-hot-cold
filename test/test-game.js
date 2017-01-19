@@ -5,7 +5,7 @@ import { expect } from 'chai';
 
 import { Game } from '../js/components/Game';
 import Header from '../js/components/Header';
-import { GameForm }from '../js/components/GameForm';
+import { GameForm } from '../js/components/GameForm';
 import { GuessList } from  '../js/components/GuessList';
 
 describe('Game component', function() {

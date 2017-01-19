@@ -30,6 +30,7 @@ export class GameForm extends Component {
           <button>Guess</button>
         </form>
         <p id="guess-count">Guess Count: {this.props.userGuess.length} </p>
+        <p>Your best score (least amount of guesses) is: {this.props.fewestGuesses}</p>
       </div>
     );
   }

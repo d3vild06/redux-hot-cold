@@ -1,4 +1,5 @@
 'use strict';
+import fetch from 'isomorphic-fetch';
 // start new game
 // generate random number to guess
 // guess number
@@ -25,3 +26,6 @@ export const guessNumber = (userGuess) => ({
   type: GUESS_NUMBER,
   userGuess
 });
+
+// export const FETCH_FEWESTGUESSES_SUCCESS = 'FETCH_FEWESTGUESSES_SUCCESS';
+// export const fetchFewestGuesses = (count)

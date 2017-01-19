@@ -6,7 +6,8 @@ const initialState = {
   correctNumber: actions.generateRandNum().guessNumber,
   userGuess: [],
   newGame: false,
-  message: 'Make Your Guess!'
+  message: 'Make Your Guess!',
+  fewestGuesses: null
 };
 
 export const GuessNumberReducer = (state=initialState, action) => {
