@@ -1,6 +1,5 @@
 import React, {
   Component,
-  PropTypes,
 } from 'react';
 
 import { connect } from 'react-redux';
@@ -13,11 +12,18 @@ export class GameForm extends Component {
     super(props);
     this.submitGuess = this.submitGuess.bind(this);
   }
-  
+
   componentDidMount() {
     this.props.dispatch(actions.fetchFewestGuesses());
+
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.gameCompleted !== prevProps.gameCompleted) {
+      console.log('state changed on game status!');
+      this.props.dispatch(actions.saveFewestGuesses(this.props.userGuess.length));
+    }
+  };
 
   submitGuess(e) {
     e.preventDefault();
@@ -41,4 +47,10 @@ export class GameForm extends Component {
   }
 }
 
-export default connect()(GameForm);
+const mapStateToProps = (state, props) => ({
+  gameCompleted: state.gameCompleted,
+  fewestGuesses: state.fewestGuesses,
+  userGuess: state.userGuess
+});
+
+export default connect(mapStateToProps)(GameForm);

@@ -7,15 +7,20 @@ const initialState = {
   userGuess: [],
   newGame: false,
   message: 'Make Your Guess!',
-  fewestGuesses: null
+  fewestGuesses: null,
+  gameCompleted: false
 };
 
 export const GuessNumberReducer = (state=initialState, action) => {
   switch (action.type) {
     case 'NEW_GAME':
     console.log('new game action requested');
-      return update(initialState, {
-        newGame: {$set: true}
+      return update(state, {
+        correctNumber: {$set: initialState.correctNumber},
+        newGame: {$set: true},
+        userGuess: {$set: []},
+        message: {$set: initialState.message},
+        gameCompleted: {$set: initialState.gameCompleted}
       });
       break;
     case 'GUESS_NUMBER':
@@ -35,12 +40,21 @@ export const GuessNumberReducer = (state=initialState, action) => {
 
       return update(state, {
         message: {$set: 'You guessed right!'},
-        userGuess: {$push: [action.userGuess]}
+        userGuess: {$push: [action.userGuess]},
+        gameCompleted: {$set: true}
       });
       break;
+
     case 'FETCH_FEWESTGUESSES_SUCCESS':
-      console.log('fewest guesses');
-      console.log(action.fewestGuesses);
+      console.log('fetching fewest guesses...');
+      return update(state, {
+        fewestGuesses: {$set: action.fewestGuesses}
+      });
+      break;
+
+    case 'SAVE_FEWESTGUESSES_SUCCESS':
+    console.log('saving fewest guesses to server...');
+    console.log('count passed inside action: ', action.fewestGuesses);
       return update(state, {
         fewestGuesses: {$set: action.fewestGuesses}
       });

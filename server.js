@@ -12,7 +12,7 @@ app.use(function(req, res, next) {
 });
 
 const fewestGuessCount = {
-  count: 2
+  count: null
 }
 
 app.get('/fewest-guesses', (req, res) => {
@@ -21,9 +21,10 @@ app.get('/fewest-guesses', (req, res) => {
 
 app.post('/fewest-guesses', (req, res) => {
   let count = req.body.count;
-  if (count < fewestGuessCount.count) {
+  console.log('count received from front-end: ', count);
+  if (count < fewestGuessCount.count || fewestGuessCount.count === null) {
     fewestGuessCount.count = count;
-    res.status(201).json(fewestGuessCount.count);
+    res.status(201).json({count: fewestGuessCount.count});
   }
 })
 

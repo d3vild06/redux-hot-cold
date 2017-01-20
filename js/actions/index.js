@@ -53,7 +53,7 @@ export const fetchFewestGuesses = () => dispatch => {
   })
   .then(response => response.json())
   .then(count =>
-      //console.log(data) 
+      //console.log(data)
       dispatch(fetchFewestGuessesSuccess(count))
     )
     .catch(error =>
@@ -66,19 +66,24 @@ export const SAVE_FEWESTGUESSES_SUCCESS = 'SAVE_FEWESTGUESSES_SUCCESS';
 export const saveFewestGuessesSuccess = count => ({
   type: SAVE_FEWESTGUESSES_SUCCESS,
   fewestGuesses: count
-})    
+})
 
 export const SAVE_FEWESTGUESSES_ERROR = 'SAVE_FEWESTGUESSES_ERROR';
 export const saveFewestGuessesError = error => ({
   type: SAVE_FEWESTGUESSES_ERROR,
   errorMessage: error
-})   
+})
 
 export const saveFewestGuesses = count => dispatch => {
+  console.log('count passed in: ', count);
   const url = 'http://localhost:8081/fewest-guesses';
   return fetch(url, {
-    method: 'post',
-    body: JSON.stringify({count})
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({count: count})
   })
   .then(response => {
     if (!response.ok) {
@@ -89,8 +94,9 @@ export const saveFewestGuesses = count => dispatch => {
     return response;
   })
   .then(response => response.json())
-  .then(count => 
-      dispatch(saveFewestGuessesSuccess(count)))
-  .catch(error => 
-      dispatch(saveFewestGuessesError(error)))   
+  .then(data =>
+    dispatch(saveFewestGuessesSuccess(data.count))
+  )
+  .catch(error =>
+    dispatch(saveFewestGuessesError(error)))
   };
